@@ -1,0 +1,5 @@
+{
+  "_comment": "Zones whose sensor is not connected. Zone 6 (waist centre, A5) reads a constant 0 on the board. Remove a number here once that sensor works. Keep in sync with SENSOR_IGNORE in the board firmware.",
+  "ignore": [],
+  "_readme": "Zones whose sensor is not connected. Zone 6 (waist centre, A5) was reading a constant 0 on 2026-10-24, so it was excluded here. The board firmware no longer ignores it either. If A5 is wired up again, leave this list empty; if it is genuinely absent, put 6 back."
+}

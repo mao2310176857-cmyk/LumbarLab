@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123f38">
+  <title>Lumbar Lab · 智能腰靠实验台</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" aria-hidden="true"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12h4l3-7 5 14 3-7h5"/></symbol>
+    <symbol id="i-record" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="m9 15 6-6m-8 5-2 2a4 4 0 0 0 6 6l3-3m-4-9 3-3a4 4 0 1 1 6 6l-2 2" transform="translate(0 -2)"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7Z"/></symbol>
+  </defs></svg>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Lumbar Lab 首页"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 6v12c0 3 2 5 5 5h10M8 11h7v7h10M11 23v4m12-4v4"/></svg></span><span>Lumbar<span class="brand-light">Lab</span><span class="brand-chinese">智能腰靠实验台</span></span></a>
+    <nav class="nav" aria-label="当前工作区"><a href="#workspace" class="active">实时工作台</a><a href="#sessions-section">实验记录</a><a href="#device-section">设备设置</a></nav>
+    <div class="topbar-meta"><span class="version">LOCAL · V0.1</span><span class="connection-pill" id="connection-pill"><span class="status-dot"></span><span id="connection-label">连接中</span></span></div>
+  </header>
+
+  <main id="workspace">
+    <section class="page-heading">
+      <div><p class="eyebrow"><span></span> COMFORT, IN BALANCE</p><h1>让支撑，恰到好处<span class="title-dot">。</span></h1><p class="page-description">观察压力分布，记住舒适支撑，探索动态调节。</p></div>
+      <div class="live-meta"><span class="live-indicator" id="live-indicator"><span class="status-dot"></span> LIVE</span><span id="frame-number">等待数据</span><span class="metadata-divider"></span><span id="source-label">本地模拟</span></div>
+    </section>
+
+    <div id="stale-banner" class="notice error-notice" role="status" hidden>实时数据连接中断，界面控制已锁定。执行器输出状态未知；请检查本地服务，页面会自动重连。</div>
+
+    <section class="playback-bar" id="playback-bar" aria-label="只读回放" hidden>
+      <div class="playback-title"><span class="playback-tag">只读回放</span><div><strong id="playback-name">实验记录</strong><span>实时自动算法已暂停 · 回放不会发送控制命令</span></div></div>
+      <div class="playback-controls"><button id="playback-toggle" class="button button-small button-dark">播放</button><label class="sr-only" for="playback-seek">回放进度</label><input id="playback-seek" type="range" min="0" max="1" value="0" step="1"><span id="playback-time">00:00 / 00:00</span><button id="playback-exit" class="button button-small button-outline">返回实时</button></div>
+    </section>
+
+    <div class="dashboard-grid">
+      <section class="card pressure-card" aria-labelledby="pressure-title">
+        <div class="card-heading"><div><p class="section-kicker">01 / SENSING</p><h2 id="pressure-title">身体与支撑的连接</h2></div><span class="subtle-tag">8 区压力</span></div>
+        <div class="pressure-content">
+          <div class="chair-wrap">
+            <div class="chair-orbit orbit-one"></div><div class="chair-orbit orbit-two"></div>
+            <svg class="chair-svg" viewBox="0 0 340 380" role="img" aria-label="8 个压力区域示意图：1、2 为座面前侧，3、4 为后侧，5、6、7 为腰部，8 为上背">
+              <defs><linearGradient id="back-fill" x1="0" x2="1" y2="1"><stop stop-color="#eff3ed"/><stop offset="1" stop-color="#d9e3dc"/></linearGradient><linearGradient id="seat-fill" x1="0" y1="0" x2="0.4" y2="1"><stop stop-color="#e7eee7"/><stop offset="1" stop-color="#ccd9ce"/></linearGradient><filter id="chair-shadow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+              <ellipse cx="170" cy="347" rx="102" ry="12" fill="#183f30" opacity=".09" filter="url(#chair-shadow)"/>
+              <path d="M118 268 103 335M226 268l15 67" stroke="#a6b8ad" stroke-width="10" stroke-linecap="round"/><path d="m115 293 114 0" stroke="#becac0" stroke-width="6"/>
+              <path d="M104 53Q105 31 131 29h79q25 2 26 24l12 145q0 18-18 22H113q-21-3-21-22Z" fill="#c5d2c9" stroke="#a4b7a9" stroke-width="1.3"/>
+              <path d="M109 51q3-16 21-17h78q20 1 22 17l10 141q1 16-17 18H117q-18-2-18-18Z" fill="url(#back-fill)"/>
+              <path d="M105 151q66-17 132 0M105 174q66-17 132 0" fill="none" stroke="#bfd0c1" stroke-width="1"/>
+              <path d="m98 212-29 66q-6 19 15 24h173q21-5 15-24l-28-66q-4-10-17-10H116q-14 0-18 10Z" fill="#b4c6b8" stroke="#a2b7a7" stroke-width="1.3"/>
+              <path d="m100 209-29 64q-6 15 16 19h167q22-4 16-19l-28-64q-4-8-17-8H118q-13 0-18 8Z" fill="url(#seat-fill)"/>
+              <path d="M82 218v-24q0-6 6-6h16M257 218v-24q0-6-6-6h-12" fill="none" stroke="#9caf9f" stroke-width="7" stroke-linecap="round"/>
+              <path d="M72 217h31m138 0h27" stroke="#b5c5b7" stroke-width="13" stroke-linecap="round"/>
+              <g class="sensor" id="sensor-8" transform="translate(170 92)"><circle class="sensor-halo" r="29"/><circle class="sensor-disc" r="17"/><text y="5">8</text></g>
+              <g class="sensor" id="sensor-5" transform="translate(123 172)"><circle class="sensor-halo" r="26"/><circle class="sensor-disc" r="16"/><text y="5">5</text></g>
+              <g class="sensor" id="sensor-6" transform="translate(170 169)"><circle class="sensor-halo" r="26"/><circle class="sensor-disc" r="16"/><text y="5">6</text></g>
+              <g class="sensor" id="sensor-7" transform="translate(217 172)"><circle class="sensor-halo" r="26"/><circle class="sensor-disc" r="16"/><text y="5">7</text></g>
+              <g class="sensor" id="sensor-3" transform="translate(126 229)"><circle class="sensor-halo" r="27"/><circle class="sensor-disc" r="16"/><text y="5">3</text></g>
+              <g class="sensor" id="sensor-4" transform="translate(214 229)"><circle class="sensor-halo" r="27"/><circle class="sensor-disc" r="16"/><text y="5">4</text></g>
+              <g class="sensor" id="sensor-1" transform="translate(113 271)"><circle class="sensor-halo" r="28"/><circle class="sensor-disc" r="16"/><text y="5">1</text></g>
+              <g class="sensor" id="sensor-2" transform="translate(227 271)"><circle class="sensor-halo" r="28"/><circle class="sensor-disc" r="16"/><text y="5">2</text></g>
+              <path d="M48 70v115m0-115 5 7m-5-7-5 7" stroke="#b2c3b5" fill="none"/><text x="37" y="138" class="svg-label" transform="rotate(-90 37 138)">BACKREST</text>
+              <text x="170" y="369" class="svg-label" text-anchor="middle">座椅正面 · 分区示意</text>
+            </svg>
+            <div class="pressure-scale"><span>轻</span><i></i><span>重</span><span class="relative-unit">相对压力</span></div>
+          </div>
+          <div class="zone-panel"><div class="zone-group-label"><span>腰部支撑</span><span>LIVE</span></div>
+            <div class="zone-row featured"><span class="zone-number">5</span><span class="zone-name">左腰</span><div class="zone-track"><i id="zone-bar-5"></i></div><strong id="zone-value-5">—</strong></div>
+            <div class="zone-row featured"><span class="zone-number">6</span><span class="zone-name">中腰</span><div class="zone-track"><i id="zone-bar-6"></i></div><strong id="zone-value-6">—</strong></div>
+            <div class="zone-row featured"><span class="zone-number">7</span><span class="zone-name">右腰</span><div class="zone-track"><i id="zone-bar-7"></i></div><strong id="zone-value-7">—</strong></div>
+            <div class="zone-group-label lower"><span>姿态参考</span><span>PRESSURE</span></div>
+            <div class="zone-row"><span class="zone-number">8</span><span class="zone-name">上背</span><div class="zone-track"><i id="zone-bar-8"></i></div><strong id="zone-value-8">—</strong></div>
+            <div class="zone-row"><span class="zone-number">3</span><span class="zone-name">左后座</span><div class="zone-track"><i id="zone-bar-3"></i></div><strong id="zone-value-3">—</strong></div>
+            <div class="zone-row"><span class="zone-number">4</span><span class="zone-name">右后座</span><div class="zone-track"><i id="zone-bar-4"></i></div><strong id="zone-value-4">—</strong></div>
+            <div class="zone-row"><span class="zone-number">1</span><span class="zone-name">左前座</span><div class="zone-track"><i id="zone-bar-1"></i></div><strong id="zone-value-1">—</strong></div>
+            <div class="zone-row"><span class="zone-number">2</span><span class="zone-name">右前座</span><div class="zone-track"><i id="zone-bar-2"></i></div><strong id="zone-value-2">—</strong></div>
+          </div>
+        </div>
+        <div class="sensing-footer"><span><i id="occupied-dot" class="status-dot"></i><span id="occupied-label">等待入座数据</span></span><span><i id="contact-dot" class="status-dot"></i><span id="contact-label">等待腰部接触</span></span><span id="signal-label">— ms</span></div>
+      </section>
+
+      <section class="card control-card" aria-labelledby="control-title">
+        <div class="card-heading"><div><p class="section-kicker">02 / SUPPORT</p><h2 id="control-title">记住支撑，开启自动</h2></div><span id="mode-tag" class="subtle-tag green-tag">等待个人参考</span></div>
+        <div class="position-heading"><span>腰靠行程 <span class="muted">/ 模拟</span></span><div><strong id="position-value">—</strong><span id="position-unit">%</span></div></div>
+        <div class="position-track"><div class="position-band"></div><i id="position-fill"></i><b id="position-thumb"></b></div><div class="position-labels"><span>收回</span><span>推出</span></div>
+        <div class="manual-controls"><button class="button button-outline live-command" data-action="manual" data-direction="retract"><svg class="icon rotate"><use href="#i-arrow"/></svg>收回一点</button><button id="stop-button" class="button button-stop live-command" data-action="stop"><svg class="icon"><use href="#i-stop"/></svg>停止</button><button class="button button-outline live-command" data-action="manual" data-direction="advance">推出一点<svg class="icon"><use href="#i-arrow"/></svg></button></div>
+        <div class="reference-block"><div class="reference-copy"><strong>留住这一刻的舒适</strong><span id="reference-description">支撑合适后，稳定采集 3 秒</span></div><button id="calibrate-button" class="button button-dark live-command" data-action="calibrate"><svg class="icon"><use href="#i-check"/></svg><span>记住当前支撑</span></button><div class="calibration-progress" id="calibration-progress" role="progressbar" aria-label="采集舒适支撑" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><i></i></div><p id="calibration-message" class="calibration-message">尚未记录舒适支撑</p></div>
+        <div class="auto-row"><div><strong>自动跟随支撑</strong><p id="auto-description">偏离舒适区间时，小步调节模拟行程</p></div><button id="auto-toggle" class="toggle live-command" type="button" role="switch" aria-checked="false" aria-label="自动跟随支撑"><i></i></button></div>
+        <div class="control-status" id="control-status"><span class="control-status-icon"><svg class="icon"><use href="#i-wave"/></svg></span><div><strong id="action-label">等待数据</strong><p id="reason-label">正在连接本地实验台…</p></div><span class="action-pulse" id="action-pulse"></span></div>
+        <div class="actuator-status" id="actuator-status" aria-label="执行器输出状态"><div class="actuator-heading"><span>执行器输出</span><span id="actuator-kind" class="actuator-kind">等待状态</span></div><strong id="actuator-state">等待输出状态</strong><div class="actuator-receipts"><span><span id="actuator-send-label">指令发送</span><b id="actuator-sent">—</b></span><span><span id="actuator-ack-label">设备回执</span><b id="actuator-ack">—</b></span></div><p id="actuator-message">连接后展示命令发送与接收确认。</p><div class="actuator-command-row"><span id="actuator-command">请求 — · 最近命令 无</span><span id="actuator-seq"></span></div><small id="actuator-note">回执不代表物理动作或停止已完成。</small></div>
+      </section>
+
+      <section class="card chart-card" aria-labelledby="chart-title"><div class="card-heading"><div><p class="section-kicker">03 / OBSERVATION</p><h2 id="chart-title">支撑变化，看得见</h2></div><div class="chart-window" id="chart-window">最近 60 秒</div></div><div class="metric-strip"><div><span>当前腰部压力</span><strong id="metric-lumbar">—</strong></div><div><span>舒适目标</span><strong id="metric-target">—</strong></div><div><span>舒适区间</span><strong id="metric-range" class="range-value">未设置</strong></div></div><div class="chart-container"><canvas id="pressure-chart" role="img" aria-label="最近 60 秒腰部压力曲线及舒适参考区间"></canvas><div class="chart-empty" id="chart-empty">数据正在到来</div></div><div class="chart-legend"><span><i class="legend-lumbar"></i>腰部均值</span><span><i class="legend-left"></i>左腰 5</span><span><i class="legend-middle"></i>中腰 6</span><span><i class="legend-right"></i>右腰 7</span><span><i class="legend-band"></i>舒适区间</span></div></section>
+
+      <section class="card scenario-card" aria-labelledby="scenario-title"><div class="card-heading"><div><p class="section-kicker">04 / EXPERIMENT</p><h2 id="scenario-title">换个姿态，看看响应</h2></div><span class="subtle-tag">模拟场景</span></div><p class="card-description">切换姿态或信号状态，观察支撑与保护逻辑。</p><div class="scenarios" id="scenarios">
+        <button class="scenario live-command selected" data-scenario="neutral"><span class="scenario-symbol">↟</span><span><strong>自然坐姿</strong><small>稳定支撑</small></span><i></i></button>
+        <button class="scenario live-command" data-scenario="forward"><span class="scenario-symbol">↗</span><span><strong>身体前倾</strong><small>腰部压力下降</small></span><i></i></button>
+        <button class="scenario live-command" data-scenario="backward"><span class="scenario-symbol">↙</span><span><strong>身体后靠</strong><small>腰部压力上升</small></span><i></i></button>
+        <button class="scenario live-command" data-scenario="left"><span class="scenario-symbol">↖</span><span><strong>向左偏坐</strong><small>左右压力变化</small></span><i></i></button>
+        <button class="scenario live-command" data-scenario="away"><span class="scenario-symbol">⇧</span><span><strong>离开座椅</strong><small>停止自动动作</small></span><i></i></button>
+        <button class="scenario live-command" data-scenario="contact_loss"><span class="scenario-symbol">◌</span><span><strong>腰部脱离</strong><small>等待接触恢复</small></span><i></i></button>
+        <button class="scenario live-command fault" data-scenario="dropout"><span class="scenario-symbol">⌁</span><span><strong>信号掉线</strong><small>超时保护</small></span><i></i></button>
+        <button class="scenario live-command fault" data-scenario="invalid"><span class="scenario-symbol">!</span><span><strong>异常数据</strong><small>有效性保护</small></span><i></i></button>
+      </div><p class="scenario-note" id="scenario-note"><span class="status-dot"></span>模拟数据 · 无需连接硬件即可体验完整流程</p></section>
+    </div>
+
+    <section class="card recording-card" id="sessions-section" aria-labelledby="sessions-title"><div class="recording-top"><div><p class="section-kicker">05 / DOCUMENTATION</p><h2 id="sessions-title">每一次调整，都有迹可循</h2><p class="card-description">记录压力、行程与反馈，随时回看实验过程。</p></div><div class="recording-actions"><div class="recording-status" id="recording-status"><span class="record-dot"></span><span id="recording-label">尚未开始记录</span><strong id="recording-time">00:00</strong></div><button class="button button-dark live-command" id="record-button"><svg class="icon"><use href="#i-record"/></svg><span>开始记录</span></button></div></div><div class="feedback-row"><span>此刻的支撑感受</span><div class="feedback-buttons"><button class="button feedback-button live-command" data-feedback="too_little"><span>−</span>支撑偏弱</button><button class="button feedback-button live-command" data-feedback="comfortable"><span>✓</span>刚刚好</button><button class="button feedback-button live-command" data-feedback="too_much"><span>+</span>支撑偏强</button></div><small id="feedback-hint">反馈将作为记录中的事件保存</small></div><div class="session-list-heading"><span>已保存的实验 <b id="sessions-count">0</b></span><button id="refresh-sessions" class="text-button">刷新列表 ↻</button></div><div id="sessions-list" class="sessions-list"><div class="empty-state"><span>↳</span><div><strong>你的第一份实验记录，从这里开始</strong><p>点击“开始记录”，调整支撑后停止保存。</p></div></div></div></section>
+
+    <div class="secondary-grid">
+      <details class="card detail-card" id="device-section"><summary><div><span class="section-kicker">DEVICE CONNECTION</span><h2>连接真实设备</h2></div><span class="detail-summary-right"><span id="device-summary">模拟设备</span><svg class="icon"><use href="#i-chevron"/></svg></span></summary><div class="detail-content"><p class="card-description">串口负责采集压力；已接入并启用真实执行器适配器后，算法才会派发驱动指令。默认仅展示建议。</p><div class="field-row"><label>数据源<select id="source-select" class="live-input"><option value="simulation">本地模拟</option><option value="serial">串口传感器</option></select></label><label>串口<select id="port-select" class="live-input"><option value="">选择串口</option></select></label><label class="baud-field">波特率<select id="baud-input" class="live-input"><option value="115200">115200</option><option value="230400">230400</option><option value="460800">460800</option><option value="921600">921600</option><option value="1000000">1000000</option><option value="2000000" selected>2000000</option></select></label></div><div class="device-actions"><button id="connect-button" class="button button-dark live-command button-small"><svg class="icon"><use href="#i-link"/></svg>连接数据源</button><button id="refresh-ports" class="button button-outline button-small">扫描串口</button><span id="ports-message"></span></div><div class="zero-panel"><label class="checkbox-label"><input id="empty-confirmation" class="live-input" type="checkbox">已确认无人入座，座面与靠背均无负载</label><button id="zero-button" class="button button-outline button-small live-command">电脑端归零</button></div><p class="device-message" id="hardware-message">等待设备信息</p><div class="matrix-section"><div class="matrix-copy"><strong>传感器压力矩阵</strong><p>16 × 16 个采样点</p><span id="mapping-status">等待区域映射状态</span><small>数值为相对压力；分区映射需按实际传感器标定。</small></div><div class="matrix-container"><canvas id="matrix-canvas" width="224" height="224" role="img" aria-label="16 乘 16 压力矩阵"></canvas><span id="matrix-empty">当前没有矩阵数据</span></div></div></div></details>
+      <details class="card detail-card" id="parameters-section"><summary><div><span class="section-kicker">CONTROL PARAMETERS</span><h2>调节参数与事件</h2></div><span class="detail-summary-right"><span>观察 · 调整</span><svg class="icon"><use href="#i-chevron"/></svg></span></summary><div class="detail-content"><form id="parameters-form"><div class="parameter-fields"><label>舒适区间容差 <span>%</span><input name="tolerance" class="live-input" type="number" min="8" max="40" step="1" value="18"><small>相对舒适目标的允许波动</small></label><label>偏差持续时间 <span>秒</span><input name="persistence_s" class="live-input" type="number" min="0.2" max="3" step="0.1" value="0.6"><small>持续超出区间后才调节</small></label><label>模拟调节速度 <span>% / 秒</span><input name="speed" class="live-input" type="number" min="1" max="10" step="0.5" value="5"><small>模拟行程变化速度</small></label><label>动作后稳定时间 <span>秒</span><input name="settle_s" class="live-input" type="number" min="0.2" max="3" step="0.1" value="0.6"><small>等待压力稳定再判断</small></label></div><button class="button button-dark button-small live-command" type="submit">应用参数</button></form><div class="events-heading"><strong>最近事件</strong><span>保留最近 30 条</span></div><ol id="events-list" class="events-list"><li class="empty-event">等待实验开始</li></ol></div></details>
+    </div>
+    <footer class="footer"><span><span class="footer-logo">L</span>Lumbar Lab <span class="footer-separator">/</span> 让每一次久坐，多一点恰好的支撑。</span><span>本地运行 · 数据保存在本机</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,13 @@
+{
+  "_readme": "Threshold overrides for the real hardware. Lives next to zones.json. Delete a key to fall back to the shipped default.",
+
+  "_max_waist_level": "8-bit cutoff for 'waist near full scale'. The sensors are 10-bit (idle 1023, pressed ~300, a drop of ~723). The 8-bit diff channel is scaled so a full press reaches ~255, so this stays at 245. Raise it to 255 to disable the check entirely while bench testing.",
+
+  "_min_waist_contact": "8-bit mean of zones 5-7 required before the algorithm treats the waist as in contact. Lower it to 1 so a light touch on the lumbar sensors counts as contact.",
+
+  "_min_seat_occupied": "8-bit mean of zones 1-4 required before the algorithm treats the seat as occupied. Lower it to 1 for bench testing without a full sit.",
+
+  "max_waist_level": 255,
+  "min_waist_contact": 1,
+  "min_seat_occupied": 1
+}

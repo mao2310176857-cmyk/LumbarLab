@@ -1,0 +1,2 @@
+# Optional: only needed for real serial acquisition.
+pyserial>=3.5,<4
